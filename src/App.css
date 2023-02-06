@@ -1,0 +1,11 @@
+.line {
+    background-color: #F2F3F5;
+    border-radius: 999px;
+    height: 2px;
+    width: 100%;
+}
+
+.lineH {
+    width: 2px !important;
+    height: 100%;
+}
