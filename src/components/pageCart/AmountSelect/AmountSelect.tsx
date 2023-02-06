@@ -1,4 +1,4 @@
-import { ProductAction } from "../../reducers/listCart"
+import { ProductAction } from "../../../reducers/listCart"
 
 type Props = {
     id: string,

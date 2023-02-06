@@ -1,5 +1,5 @@
-import { Product } from "../../globalTypes/Product";
-import { ProductAction } from "../../reducers/listCart";
+import { Product } from "../../../types/Product";
+import { ProductAction } from "../../../reducers/listCart";
 import AmountSelect from "../AmountSelect/AmountSelect";
 
 type Props = {

@@ -1,26 +1,19 @@
 import { useReducer } from "react";
 import products from "../data/products";
+import { reducerAction } from "../types/reducerAction";
 
-type Product = {
+export type listCartType = {
     id: string,
     amount: number
 }
 
-export type ProductAction = {
-    type: 'ADD' | 'REMOVE' | 'SET_AMOUNT',
-    payload?: {
-        id?: string,
-        amount?: number
-    }
-}
-
-const productsList: Product[] = [
+export const listCartInitial: listCartType[] = [
     {id: products[0].id, amount: 1},
     {id: products[3].id, amount: 2},
     {id: products[2].id, amount: 4}
 ]
 
-const reducer = (state: Product[], action: ProductAction) => {
+export const listCartReducer = (state: listCartType[], action: reducerAction) => {
     switch(action.type) {
         case 'ADD':
             if(action.payload?.id) {
@@ -52,9 +45,4 @@ const reducer = (state: Product[], action: ProductAction) => {
     }
 
     return state;
-}
-
-
-export const useProductList = () => {
-    return useReducer(reducer, productsList)
 }
