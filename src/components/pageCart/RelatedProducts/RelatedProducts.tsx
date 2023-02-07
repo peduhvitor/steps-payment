@@ -1,9 +1,9 @@
 import { Product } from "../../../types/Product";
-import { ProductAction } from "../../../reducers/listCart";
+import { reducerAction } from "../../../types/reducerAction"; 
 
 type Props = {
     data: Product,
-    action: ({}:ProductAction) => void
+    action: ({}:reducerAction) => void
 }
 
 const RelatedProducts = ({data, action}: Props) => {

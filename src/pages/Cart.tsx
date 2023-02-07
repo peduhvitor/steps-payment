@@ -1,4 +1,5 @@
 import { useContext } from "react"
+import BackButtonAndTitle from "../components/global/BackButtonAndTitle/BackButtonAndTitle"
 import CartProduct from "../components/pageCart/CartProduct/CartProduct"
 import RelatedProducts from "../components/pageCart/RelatedProducts/RelatedProducts"
 import { Context } from "../contexts/Context"
@@ -14,17 +15,7 @@ const Cart = () => {
 
             { productsInTheCart.length > 0 ?
             <div className='flex max-lg:flex-col max-lg:items-center justify-between max-w-[1296px] w-[90vw] gap-8'>
-                <div className='max-lg:max-w-[820px] max-lg:w-[90vw] flex justify-between max-lg:items-center'>
-                    <div className='min-w-[40px] max-w-[40px] h-10 flex justify-center items-center rounded-full bg-[#F2F3F5]'>
-                        <img src="/angle-small-left.svg"/>
-                    </div>
-                    <div className='lg:hidden text-[18px] text-[#3F4E6E] font-medium'>
-                        Carrinho
-                    </div>
-                    <div className='w-[40px] lg:hidden'>
-
-                    </div>
-                </div>
+                <BackButtonAndTitle title="Carrinho" link="cart"/>
                 
                 <div className='flex max-2xl:flex-col max-2xl:items-center max-2xl:w-full flex-1 gap-8'>
                     <div className='max-w-[820px] w-full h-min p-6 flex flex-col items-center gap-6 bg-[#F2F3F5] rounded-[40px]'>
