@@ -1,4 +1,3 @@
-import { useReducer } from "react";
 import products from "../data/products";
 import { reducerAction } from "../types/reducerAction";
 

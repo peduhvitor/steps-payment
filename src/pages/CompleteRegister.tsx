@@ -1,6 +1,16 @@
+import { useEffect, useContext  } from "react"
+import { Context } from "../contexts/Context"
 import BackButtonAndTitle from "../components/global/BackButtonAndTitle/BackButtonAndTitle"
+import StatusStep from "../components/stepsBuy/StatusStep"
 
 const CompleteRegister = () => {
+
+    const { dispatch } = useContext(Context)
+
+    useEffect(() => {
+        dispatch({ type: 'CHANGE-STEP', payload: { page: 'completeRegister'} })
+    }, [])
+
     return (
         <div className="flex flex-col w-full items-center my-10">
             <div className='flex max-lg:flex-col max-lg:items-center justify-between max-w-[1296px] w-[90vw] gap-8'>
@@ -36,24 +46,8 @@ const CompleteRegister = () => {
                             Próximo
                         </button>
                     </div>
-
-                    <div className="h-min flex flex-col gap-6 max-2xl:max-w-[820px] max-2xl:w-full flex-1 p-6 bg-[#F2F3F5] rounded-[40px] text-[#6D737D] text-[18px]">
-                        <div>
-                            <div>Complete seu cadastro</div>
-                            <img src="" alt="" />
-                        </div>
-                        <div className="line bg-[#DADFE8]"></div>
-                        <div>
-                            <div>Complete seu cadastro</div>
-                            <img src="" alt="" />
-                        </div>
-                        <div className="line bg-[#DADFE8]"></div>
-                        <div>
-                            <div>Complete seu cadastro</div>
-                            <img src="" alt="" />
-                        </div>
-                    </div>
-
+                    
+                    <StatusStep/>
                 </div>
 
 

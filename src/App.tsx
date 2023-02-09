@@ -1,4 +1,4 @@
-import Routes from './Routes'
+import MainRoutes from './Routes'
 import './App.css'
 import Header from './components/global/Header/Header'
 
@@ -6,7 +6,7 @@ const App = () => {
     return (
         <div>
             <Header/>
-            <Routes/> 
+            <MainRoutes/> 
         </div>
     )
 }
