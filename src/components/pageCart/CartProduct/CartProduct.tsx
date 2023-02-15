@@ -1,14 +1,12 @@
 import { Product } from "../../../types/Product";
-import { ProductAction } from "../../../reducers/listCart";
 import AmountSelect from "../AmountSelect/AmountSelect";
 
 type Props = {
     data: Product,
-    amount: number,
-    action: ({}:ProductAction) => void
+    amount: number
 }
 
-const CartProduct = ({data, amount, action}: Props) => {
+const CartProduct = ({data, amount}: Props) => {
 
     return (
         <div className="w-full flex gap-8">
@@ -25,7 +23,7 @@ const CartProduct = ({data, amount, action}: Props) => {
 
                 <div className="flex flex-col gap-2 items-center">
                     <div className="text-[14px] text-[#6D737D]">Quantidade</div>
-                    <AmountSelect id={data.id} amount={amount} action={action}/>
+                    <AmountSelect id={data.id} amount={amount}/>
                 </div>
             </div>
         </div>

@@ -1,9 +1,9 @@
-import { ProductAction } from "../../../reducers/listCart"
+import { useContext } from "react"
+import { Context } from "../../../contexts/Context"
 
 type Props = {
     id: string,
-    amount: number,
-    action: ({}:ProductAction) => void
+    amount: number
 }
 
 type SetAmountType = {
@@ -11,7 +11,9 @@ type SetAmountType = {
     value?: number
 } 
 
-const AmountSelect = ({id, amount, action}: Props) => {
+const AmountSelect = ({id, amount}: Props) => {
+
+    const { dispatch } = useContext(Context)
 
     const setAmount = (set: SetAmountType) => {
         let value: number = amount;
@@ -22,7 +24,7 @@ const AmountSelect = ({id, amount, action}: Props) => {
             break;
             case 'MINUS':
                 if(amount === 1) {
-                    action({type:'REMOVE', payload: {id:id}})
+                    dispatch({ type: 'REMOVE', payload: {id: id} })
                 }
                 value--;
             break;
@@ -36,7 +38,7 @@ const AmountSelect = ({id, amount, action}: Props) => {
                 }
         }
 
-        action({
+        dispatch({
             type: 'SET_AMOUNT',
             payload: {
                 id: id,

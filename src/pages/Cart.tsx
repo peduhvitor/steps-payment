@@ -21,7 +21,7 @@ const Cart = () => {
                     <div className='max-w-[820px] w-full h-min p-6 flex flex-col items-center gap-6 bg-[#F2F3F5] rounded-[40px]'>
                         { productsInTheCart.map((item, index) => (
                             <>
-                            <CartProduct data={item} amount={item.amount} action={dispatch}/>
+                            <CartProduct data={item} amount={item.amount}/>
                             
                             { index < (productsInTheCart.length -1) && 
                                 <div className="line bg-[#DADFE8]"></div>
