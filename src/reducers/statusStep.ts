@@ -1,7 +1,5 @@
 import { reducerAction } from "../types/reducerAction"
 
-type PageStatus = 'notAccessed' | 'accessing' | 'accessed'
-
 export type InitialStateType = {
     completeRegister: string,
     paymentForm: string,
