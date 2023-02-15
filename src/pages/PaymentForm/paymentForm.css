@@ -1,0 +1,21 @@
+.select-payment .select-payment-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex: 1;
+    height: 72px;
+
+    border-radius: 20px;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.select-payment input[type="radio"]:checked + .select-payment-form {
+    background-color: #122E5F;
+    color: #fff;
+}
+
+.select-payment input[type="radio"] {
+    display: none;
+}

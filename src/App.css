@@ -10,6 +10,9 @@
     height: 100%;
 }
 
+
+/* forms */
+
 .input-group {
     width: 100%;
     display: flex;
@@ -24,7 +27,7 @@
     color: #848B99;
 }
 
-.input-group input {
+.input-group input:not([type="radio"]):not([type="checkbox"]) {
     height: 40px;
     padding: 8px 24px;
 
@@ -36,4 +39,9 @@
 
 .input-group input::placeholder {
     color: #DADFE8;
+}
+
+.double-input {
+    display: flex;
+    gap: 24px;
 }

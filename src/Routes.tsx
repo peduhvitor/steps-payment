@@ -1,7 +1,7 @@
 import { useRoutes } from "react-router-dom"
 import Cart from "./pages/Cart"
 import CompleteRegister from "./pages/CompleteRegister"
-import PaymentForm from "./pages/PaymentForm"
+import PaymentForm from "./pages/PaymentForm/PaymentForm"
 
 const MainRoutes = () => {
     return useRoutes([
