@@ -15,7 +15,7 @@ const Cart = () => {
 
             { productsInTheCart.length > 0 ?
             <div className='flex max-lg:flex-col max-lg:items-center justify-between max-w-[1296px] w-[90vw] gap-8'>
-                <BackButtonAndTitle title="Carrinho" link="cart"/>
+                <BackButtonAndTitle title="Carrinho"/>
                 
                 <div className='flex max-2xl:flex-col max-2xl:items-center max-2xl:w-full flex-1 gap-8'>
                     <div className='max-w-[820px] w-full h-min p-6 flex flex-col items-center gap-6 bg-[#F2F3F5] rounded-[40px]'>
