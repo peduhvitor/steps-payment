@@ -1,9 +1,5 @@
 import { useNavigate } from "react-router-dom"
-
-type Props = {
-    title: string,
-    link?: string
-}
+import { Props } from "./type"
 
 const BackButtonAndTitle = ({ title, link }: Props) => {
 
