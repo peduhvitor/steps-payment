@@ -27,7 +27,6 @@ const CompleteRegister = () => {
     const navigate = useNavigate();
 
     const password = watch('password')
-    const passwordRepeat = watch('passwordRepeat')
 
     const onSubmit: SubmitHandler<DataForm> = (data) => {
         const { name, email, password } = data
