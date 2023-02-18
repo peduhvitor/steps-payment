@@ -37,7 +37,7 @@ const CompleteRegister = () => {
         })
 
         setTimeout(() => {
-                navigate('/step-buy/payment-form')
+            navigate('/step-buy/payment-form')
         }, 200)
         
     }
