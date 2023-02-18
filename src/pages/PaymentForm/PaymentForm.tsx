@@ -32,7 +32,7 @@ const PaymentForm = () => {
                                 <div className="text-[#848B99] pl-[10px]">Forma de pagamento</div>
 
                                 <div className="flex gap-5">
-                                    <input type="radio" name="payment-form" id="pix" />
+                                    <input type="radio" name="payment-form" id="pix"/>
                                     <label htmlFor="pix" className="select-payment-form">Pix</label>
 
                                     <input type="radio" name="payment-form" id="ticket" />

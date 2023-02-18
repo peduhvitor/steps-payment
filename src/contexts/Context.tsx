@@ -1,14 +1,17 @@
 import { createContext, useReducer } from 'react'
 import { listCartType, listCartInitial, listCartReducer } from '../reducers/listCart'
 import * as statusStep from '../reducers/statusStep'
+import * as userInfo from '../reducers/userInfo'
 import { reducerAction } from '../types/reducerAction'
 
 type initialStateType = {
+    userInfo: userInfo.InitialStateType,
     listCart: listCartType[],
     statusStep: statusStep.InitialStateType
 }
 
 const initialState: initialStateType = {
+    userInfo: userInfo.initialState,
     listCart: listCartInitial,
     statusStep: statusStep.initialState
 }
@@ -24,6 +27,7 @@ export const Context = createContext<ContextType>({
 })
 
 const mainReducer = (state: initialStateType, action: reducerAction) => ({
+    userInfo: userInfo.reducer(state.userInfo, action),
     listCart: listCartReducer(state.listCart, action),
     statusStep: statusStep.reducer(state.statusStep, action)
 })
