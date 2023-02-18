@@ -59,8 +59,9 @@ const CompleteRegister = () => {
                                     type="text"
                                     placeholder="Digite aqui o seu nome" 
                                     {...register('name', {
-                                        required: true,
+                                        required: 'Campo obrigatório',
                                     })}/>
+                                    {errors.name && <p className="text-[14px] text-red-500 pl-3">{errors.name.message}</p>}
                             </label>
 
                             <label className="input-group">
