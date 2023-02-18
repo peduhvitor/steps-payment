@@ -18,7 +18,7 @@ export const PaymentFormVerify = ({children}: React.PropsWithChildren) => {
             return true
         } 
 
-        return false
+        return true
     }
 
     return (
