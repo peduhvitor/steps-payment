@@ -1,5 +1,6 @@
 import { useEffect, useContext } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
+import { useNavigate } from "react-router-dom";
 import isEmail from 'validator/lib/isEmail';
 import { Context } from "../contexts/Context"
 import BackButtonAndTitle from "../components/global/BackButtonAndTitle/BackButtonAndTitle"
@@ -15,7 +16,7 @@ type DataForm = {
 const CompleteRegister = () => {
     const pageTitle = 'Completar cadastro'
 
-    const { dispatch } = useContext(Context)
+    const { state, dispatch } = useContext(Context)
 
     useEffect(() => {
         dispatch({ type: 'CHANGE-STEP', payload: { page: 'completeRegister'} })
@@ -23,12 +24,24 @@ const CompleteRegister = () => {
     
 
     const { register, handleSubmit, watch, formState: {errors} } = useForm<DataForm>()
+    const navigate = useNavigate();
 
     const password = watch('password')
     const passwordRepeat = watch('passwordRepeat')
-    
 
-    const onSubmit: SubmitHandler<DataForm> = (data) => console.log(data);
+    const onSubmit: SubmitHandler<DataForm> = (data) => {
+        const { name, email, password } = data
+
+        dispatch({
+            type: 'CHANGE_DATA_USER',
+            payload: { data: { name, email, password } }
+        })
+
+        setTimeout(() => {
+                navigate('/step-buy/payment-form')
+        }, 200)
+        
+    }
 
     return (
         <div className="flex flex-col w-full items-center my-10">
@@ -38,6 +51,7 @@ const CompleteRegister = () => {
                 <div className="flex max-2xl:flex-col max-2xl:items-center max-2xl:w-full flex-1 gap-8">
                     <form onSubmit={handleSubmit(onSubmit)} className="max-w-[820px] w-full h-min p-6 flex flex-col items-center gap-6 bg-[#F2F3F5] rounded-[40px]">
                         <div className="text-[24px] font-medium text-[#3F4E6E]">{pageTitle}</div>
+                        <div>{state.userInfo.basicsInfo.name}</div>
 
                         <div className="flex flex-col gap-6 w-full">
                             <label className="input-group">
@@ -70,8 +84,7 @@ const CompleteRegister = () => {
                                     type="password" 
                                     placeholder="Digite aqui uma senha" 
                                     {...register('password', {
-                                        required: 'Este campo é obrigatório',
-                                        maxLength: { value: 12, message: 'Sua senha deve ter no máximo 12 caracteres'}
+                                        required: 'Este campo é obrigatório'
                                     })}/>
                                     {errors.password && <p className="text-[14px] text-red-500 pl-3">{errors.password.message}</p>}
                             </label>
@@ -89,7 +102,7 @@ const CompleteRegister = () => {
                             </label>
                         </div>
 
-                        <input type="submit" className='w-full h-10 px-6 rounded-full bg-[#122E5F] text-white text-[18px]' value="Próximo"/>
+                        <input type="submit" className='cursor-pointer w-full h-10 px-6 rounded-full bg-[#122E5F] text-white text-[18px]' value="Próximo"/>
                     </form>
                     
                     <StatusStep/>

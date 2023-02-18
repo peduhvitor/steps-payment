@@ -16,7 +16,7 @@ const PaymentForm = () => {
             type: 'CHANGE-STEP',
             payload: { page: 'paymentForm' }
         })
-    })
+    }, [])
 
     return (
         <div className="flex flex-col w-full items-center my-10">
