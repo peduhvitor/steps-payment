@@ -22,6 +22,7 @@ export const UserExistVerify = ({children, required, route}: Props) => {
                     return
                 }
                 navigate(route)
+                return
             }
             state.userInfo.basicsInfo.id && setShowChildren(true)
             return
@@ -33,11 +34,12 @@ export const UserExistVerify = ({children, required, route}: Props) => {
                 return
             }
             navigate(route)
+            return
         }
 
         !state.userInfo.basicsInfo.id && setShowChildren(true)
         return
-    }, [])
+    }, [navigate])
 
     return <>{showChildren && children}</>
 }
