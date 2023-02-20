@@ -73,31 +73,46 @@ const PaymentForm = () => {
                                 </div>
                             </div>
 
-                            <div className="line bg-[#DADFE8]"></div>
+                            { watch('payment-form') === 'pix' && 
+                                <div className="text-center">
+                                    Na próxima tela efetue o pagamento via pix
+                                </div>
+                            }
 
-                            <label className="input-group">
-                                <div className="title">Nome do titular</div>
-                                <input type="text" placeholder="Digite o nome que consta no cartão" />
-                            </label>
+                            { watch('payment-form') === 'ticket' && 
+                                <div className="text-center">
+                                    Na próxima tela efetue o pagamento via boleto
+                                </div>
+                            }
 
-                            <label className="input-group">
-                                <div className="title">Número do cartão</div>
-                                <input type="text" placeholder="Digite o número que consta no cartão" />
-                            </label>
+                            { watch('payment-form') === 'credit-card' && 
+                                <>
+                                <div className="line bg-[#DADFE8]"></div>
 
-                            <div className="double-input">
                                 <label className="input-group">
-                                    <div className="title">Expiração</div>
-                                    <input type="text" placeholder="MM/AAAA" />
+                                    <div className="title">Nome do titular</div>
+                                    <input type="text" placeholder="Digite o nome que consta no cartão" />
                                 </label>
 
                                 <label className="input-group">
-                                    <div className="title">CVC</div>
-                                    <input type="text" placeholder="000" />
+                                    <div className="title">Número do cartão</div>
+                                    <input type="text" placeholder="Digite o número que consta no cartão" />
                                 </label>
-                            </div>
+
+                                <div className="double-input">
+                                    <label className="input-group">
+                                        <div className="title">Expiração</div>
+                                        <input type="text" placeholder="MM/AAAA" />
+                                    </label>
+
+                                    <label className="input-group">
+                                        <div className="title">CVC</div>
+                                        <input type="text" placeholder="000" />
+                                    </label>
+                                </div>
+                                </>
+                            }
                         </div>
-
                         <button className='w-full h-10 px-6 rounded-full bg-[#122E5F] text-white text-[18px]'>
                             Próximo
                         </button>

@@ -1,5 +1,5 @@
 import { useRoutes } from "react-router-dom"
-import { CompleteRegisterVerify, PaymentFormVerify } from "./middlewares/StepsPayment"
+import { UserExistVerify} from "./middlewares/StepsPayment"
 import Cart from "./pages/Cart"
 import CompleteRegister from "./pages/CompleteRegister"
 import PaymentForm from "./pages/PaymentForm/PaymentForm"
@@ -7,8 +7,8 @@ import PaymentForm from "./pages/PaymentForm/PaymentForm"
 const MainRoutes = () => {
     return useRoutes([
         { path: '/cart', element: <Cart/> },
-        { path: '/step-buy/complete-register', element: <CompleteRegisterVerify><CompleteRegister/></CompleteRegisterVerify> },
-        { path: '/step-buy/payment-form', element: <PaymentFormVerify><PaymentForm/></PaymentFormVerify> }
+        { path: '/step-buy/complete-register', element: <UserExistVerify><CompleteRegister/></UserExistVerify> },
+        { path: '/step-buy/payment-form', element: <UserExistVerify><PaymentForm/></UserExistVerify> }
     ])
 }
 

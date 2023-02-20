@@ -2,6 +2,7 @@ import { reducerAction } from "../types/reducerAction";
 
 export type InitialStateType = {
     basicsInfo: {
+        id: string,
         name: string,
         email: string ,
         password: string 
@@ -11,6 +12,7 @@ export type InitialStateType = {
 
 export const initialState: InitialStateType = {
     basicsInfo: {
+        id: '',
         name: '',
         email: '',
         password: ''

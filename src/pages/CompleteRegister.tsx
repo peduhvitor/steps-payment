@@ -1,7 +1,8 @@
 import { useEffect, useContext } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { useNavigate } from "react-router-dom";
-import isEmail from 'validator/lib/isEmail';
+import { useNavigate } from "react-router-dom"
+import isEmail from 'validator/lib/isEmail'
+import { v4 as uuidv4 } from 'uuid'
 import { Context } from "../contexts/Context"
 import BackButtonAndTitle from "../components/global/BackButtonAndTitle/BackButtonAndTitle"
 import StatusStep from "../components/stepsBuy/StatusStep"
@@ -31,12 +32,16 @@ const CompleteRegister = () => {
     const onSubmit: SubmitHandler<DataForm> = (data) => {
         const { name, email, password } = data
 
+        const id = uuidv4()
+
         dispatch({
             type: 'CHANGE_DATA_USER',
-            payload: { data: { name, email, password } }
+            payload: { data: { id, name, email, password } }
         })
 
         setTimeout(() => {
+            console.log(state.userInfo.basicsInfo.id);
+            
             navigate('/step-buy/payment-form')
         }, 200)
         
@@ -50,7 +55,6 @@ const CompleteRegister = () => {
                 <div className="flex max-2xl:flex-col max-2xl:items-center max-2xl:w-full flex-1 gap-8">
                     <form onSubmit={handleSubmit(onSubmit)} className="max-w-[820px] w-full h-min p-6 flex flex-col items-center gap-6 bg-[#F2F3F5] rounded-[40px]">
                         <div className="text-[24px] font-medium text-[#3F4E6E]">{pageTitle}</div>
-                        <div>{state.userInfo.basicsInfo.name}</div>
 
                         <div className="flex flex-col gap-6 w-full">
                             <label className="input-group">
