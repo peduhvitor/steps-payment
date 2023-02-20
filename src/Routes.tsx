@@ -8,7 +8,7 @@ const MainRoutes = () => {
     return useRoutes([
         { path: '/cart', element: <Cart/> },
         { path: '/step-buy/complete-register', element: <UserExistVerify><CompleteRegister/></UserExistVerify> },
-        { path: '/step-buy/payment-form', element: <UserExistVerify><PaymentForm/></UserExistVerify> }
+        { path: '/step-buy/payment-form', element: <UserExistVerify required><PaymentForm/></UserExistVerify> }
     ])
 }
 

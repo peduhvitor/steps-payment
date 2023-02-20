@@ -1,7 +1,17 @@
-import { useContext } from "react"
+import { useContext, ReactNode } from "react"
 import { Context } from "../contexts/Context"
 
-export const UserExistVerify = ({children}: React.PropsWithChildren) => {
+type Props = {
+    children: ReactNode,
+    required?: boolean
+}
+
+export const UserExistVerify = ({children, required}: Props) => {
     const { state } = useContext(Context);
+
+    if(required) {
+        return <>{state.userInfo.basicsInfo.id && children}</>
+    }
+
     return <>{!state.userInfo.basicsInfo.id && children}</>
 }
