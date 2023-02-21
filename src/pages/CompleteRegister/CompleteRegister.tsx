@@ -7,13 +7,7 @@ import { Context } from "../../contexts/Context"
 import BackButtonAndTitle from "../../components/global/BackButtonAndTitle/BackButtonAndTitle"
 import StatusStep from "../../components/stepsBuy/StatusStep"
 import { createFakeData } from "./CompleteRegister.utils"
-
-type DataForm = {
-    name: string,
-    email: string,
-    password: string,
-    passwordRepeat: string
-}
+import { DataForm } from "./CompleteRegister.types"
 
 const CompleteRegister = () => {
     const pageTitle = 'Completar cadastro'
