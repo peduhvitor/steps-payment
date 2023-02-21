@@ -18,7 +18,7 @@ type DataForm = {
 const CompleteRegister = () => {
     const pageTitle = 'Completar cadastro'
 
-    const { state, dispatch } = useContext(Context)
+    const { dispatch } = useContext(Context)
 
     useEffect(() => {
         dispatch({ type: 'CHANGE-STEP', payload: { page: 'completeRegister'} })
@@ -28,11 +28,8 @@ const CompleteRegister = () => {
     const { register, handleSubmit, watch, formState: {errors} } = useForm<DataForm>()
     const navigate = useNavigate();
 
-    const password = watch('password')
-
     const onSubmit: SubmitHandler<DataForm> = (data) => {
         const { name, email, password } = data
-
         const id = uuidv4()
 
         dispatch({
@@ -41,8 +38,6 @@ const CompleteRegister = () => {
         })
 
         setTimeout(() => {
-            console.log(state.userInfo.basicsInfo.id);
-            
             navigate('/step-buy/payment-form')
         }, 200)
     }
@@ -106,7 +101,7 @@ const CompleteRegister = () => {
                                     {...register('passwordRepeat', {
                                         value: `${fakePassword}`,
                                         required: true,
-                                        validate: (value) => value === password
+                                        validate: (value) => value === watch('password')
                                     })}/>
                                 {errors.passwordRepeat && <p className="text-[14px] text-red-500 pl-3">As senhas não combinam</p>}
                             </label>
