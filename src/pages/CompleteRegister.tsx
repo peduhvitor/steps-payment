@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import isEmail from 'validator/lib/isEmail'
 import { v4 as uuidv4 } from 'uuid'
+import { faker } from '@faker-js/faker/locale/pt_BR'
 import { Context } from "../contexts/Context"
 import BackButtonAndTitle from "../components/global/BackButtonAndTitle/BackButtonAndTitle"
 import StatusStep from "../components/stepsBuy/StatusStep"
@@ -44,8 +45,18 @@ const CompleteRegister = () => {
             
             navigate('/step-buy/payment-form')
         }, 200)
-        
     }
+
+    // Criar dados para completar inputs
+
+    const fakeFullName = `${faker.name.firstName()} ${faker.name.lastName()} ${faker.name.lastName()}`
+
+    const separateNames = fakeFullName.split(' ')
+    
+    const fakeEmail = faker.internet.email(separateNames[0], separateNames[1], 'gmail.com')
+
+    const fakePassword = faker.internet.password()
+    
 
     return (
         <div className="flex flex-col w-full items-center my-10">
@@ -61,8 +72,9 @@ const CompleteRegister = () => {
                                 <div className="title">Seu nome completo</div>
                                 <input 
                                     type="text"
-                                    placeholder="Digite aqui o seu nome" 
+                                    placeholder="Digite aqui o seu nome"
                                     {...register('name', {
+                                        value: `${fakeFullName}`,
                                         required: 'Campo obrigatório',
                                     })}/>
                                     {errors.name && <p className="text-[14px] text-red-500 pl-3">{errors.name.message}</p>}
@@ -74,6 +86,7 @@ const CompleteRegister = () => {
                                     type="text" 
                                     placeholder="Digite aqui o seu email" 
                                     {...register('email', {
+                                        value: `${fakeEmail}`,
                                         required: 'Campo obrigatório',
                                         validate: {
                                             email: (value) => isEmail(value) || 'Email inválido'
@@ -88,6 +101,7 @@ const CompleteRegister = () => {
                                     type="password" 
                                     placeholder="Digite aqui uma senha" 
                                     {...register('password', {
+                                        value: `${fakePassword}`,
                                         required: 'Este campo é obrigatório'
                                     })}/>
                                     {errors.password && <p className="text-[14px] text-red-500 pl-3">{errors.password.message}</p>}
@@ -99,6 +113,7 @@ const CompleteRegister = () => {
                                     type="password" 
                                     placeholder="Repita sua senha aqui" 
                                     {...register('passwordRepeat', {
+                                        value: `${fakePassword}`,
                                         required: true,
                                         validate: (value) => value === password
                                     })}/>
