@@ -3,10 +3,10 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import isEmail from 'validator/lib/isEmail'
 import { v4 as uuidv4 } from 'uuid'
-import { faker } from '@faker-js/faker/locale/pt_BR'
-import { Context } from "../contexts/Context"
-import BackButtonAndTitle from "../components/global/BackButtonAndTitle/BackButtonAndTitle"
-import StatusStep from "../components/stepsBuy/StatusStep"
+import { Context } from "../../contexts/Context"
+import BackButtonAndTitle from "../../components/global/BackButtonAndTitle/BackButtonAndTitle"
+import StatusStep from "../../components/stepsBuy/StatusStep"
+import { createFakeData } from "./CompleteRegister.utils"
 
 type DataForm = {
     name: string,
@@ -46,17 +46,8 @@ const CompleteRegister = () => {
             navigate('/step-buy/payment-form')
         }, 200)
     }
-
-    // Criar dados para completar inputs
-
-    const fakeFullName = `${faker.name.firstName()} ${faker.name.lastName()} ${faker.name.lastName()}`
-
-    const separateNames = fakeFullName.split(' ')
     
-    const fakeEmail = faker.internet.email(separateNames[0], separateNames[1], 'gmail.com')
-
-    const fakePassword = faker.internet.password()
-    
+    const { fakeFullName, fakeEmail, fakePassword } = createFakeData()
 
     return (
         <div className="flex flex-col w-full items-center my-10">
