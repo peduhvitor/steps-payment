@@ -1,9 +1,9 @@
 import { useContext } from "react"
-import BackButtonAndTitle from "../components/global/BackButtonAndTitle/BackButtonAndTitle"
-import CartProduct from "../components/pageCart/CartProduct/CartProduct"
-import RelatedProducts from "../components/pageCart/RelatedProducts/RelatedProducts"
-import { Context } from "../contexts/Context"
-import cartFunctions from "../utils/cartFunctions"
+import BackButtonAndTitle from "../../components/global/BackButtonAndTitle/BackButtonAndTitle"
+import CartProduct from "../../components/pageCart/CartProduct/CartProduct"
+import RelatedProducts from "../../components/pageCart/RelatedProducts/RelatedProducts"
+import { Context } from "../../contexts/Context"
+import cartFunctions from "../../utils/cartFunctions"
 
 const Cart = () => {
     const pageTitle = 'Carrinho'

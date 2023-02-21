@@ -1,6 +1,6 @@
 import { useRoutes } from "react-router-dom"
 import { UserExistVerify} from "./middlewares/UserExistVerify"
-import Cart from "./pages/Cart"
+import Cart from "./pages/Cart/Cart"
 import CompleteRegister from "./pages/CompleteRegister/CompleteRegister"
 import PaymentForm from "./pages/PaymentForm/PaymentForm"
 
