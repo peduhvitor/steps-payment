@@ -1,13 +1,17 @@
 import { useEffect, useContext } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import isEmail from 'validator/lib/isEmail'
-import { v4 as uuidv4 } from 'uuid'
+
 import { Context } from "../../contexts/Context"
-import BackButtonAndTitle from "../../components/global/BackButtonAndTitle/BackButtonAndTitle"
-import StatusStep from "../../components/stepsBuy/StatusStep"
 import { createFakeData } from "./CompleteRegister.utils"
 import { DataForm } from "./CompleteRegister.types"
+
+import StatusStep from "../../components/stepsBuy/StatusStep"
+import BackButtonAndTitle from "../../components/global/BackButtonAndTitle/BackButtonAndTitle"
+
+import isEmail from 'validator/lib/isEmail'
+import { v4 as uuidv4 } from 'uuid'
+
 
 const CompleteRegister = () => {
     const pageTitle = 'Completar cadastro'
