@@ -20,7 +20,7 @@ type Form = {
 const AddAddress = () => {
     const pageTitle = 'Adicione o endereço'
 
-    const { register, handleSubmit, formState: { errors } } = useForm<Form>()
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<Form>()
 
     const onSubmit: SubmitHandler<Form> = (data) => { }
 
@@ -38,8 +38,9 @@ const AddAddress = () => {
                                 <input
                                     type="text"
                                     placeholder="Ex.: 40548848"
+                                    maxLength={8}
                                     {...register('cep', {
-                                        required: 'Campo obrigatório',
+                                        required: 'Campo obrigatório'
                                     })} />
                                 {errors.cep && <p className="text-[14px] text-red-500 pl-3">{errors.cep.message}</p>}
                             </label>
@@ -62,7 +63,7 @@ const AddAddress = () => {
                                         type="text"
                                         placeholder="Ex.: 541"
                                         {...register('number', {
-                                            required: 'Campo obrigatório',
+                                            required: 'Campo obrigatório'
                                         })} />
                                     {errors.number && <p className="text-[14px] text-red-500 pl-3">{errors.number.message}</p>}
                                 </label>
@@ -120,7 +121,6 @@ const AddAddress = () => {
 
                     <StatusStep />
                 </div>
-
 
             </div>
         </div>

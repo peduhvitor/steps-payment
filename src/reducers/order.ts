@@ -39,6 +39,7 @@ export const initialState: InitialStateType = {
         email: '',
     },
     address: {
+        cep: '',
         road: '',
         number: '',
         neighborhood: '',
