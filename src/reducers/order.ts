@@ -9,11 +9,12 @@ export type InitialStateType = {
         email: string,
     },
     address: {
+        cep: string,
         road: string,
         number: string,
         neighborhood: string,
         city: string,
-        state: string
+        state: string,
     },
     paymentForm: {
         method: string,
