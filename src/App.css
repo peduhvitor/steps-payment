@@ -41,6 +41,11 @@
     color: #DADFE8;
 }
 
+.input-group input:disabled {
+    color: #565656 !important;
+    background-color: #e7e7e7;
+}
+
 .double-input {
     display: flex;
     gap: 24px;

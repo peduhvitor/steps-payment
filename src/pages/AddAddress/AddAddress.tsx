@@ -146,9 +146,10 @@ const AddAddress = () => {
                                 <div className="title">Cidade</div>
                                 <input
                                     type="text"
+                                    disabled={true}
                                     {...register('city', {
                                         value: `Insira o Cep para preencher a cidade`,
-                                        required: 'Campo obrigatório',
+                                        required: 'Campo obrigatório'
                                     })} />
                                 {errors.city && <p className="text-[14px] text-red-500 pl-3">{errors.city.message}</p>}
                             </label>
