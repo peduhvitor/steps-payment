@@ -1,6 +1,7 @@
-import { useEffect, useContext } from "react"
+import { useEffect, useContext, useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
+import axios from 'axios';
 
 import { Context } from "../../contexts/Context"
 
@@ -13,14 +14,54 @@ type Form = {
     number: string,
     complement: string,
     neighborhood: string,
-    city: string,
-    state: string
+    city: string
+}
+
+type cepInfo = {
+    cep: string,
+    logradouro: string,
+    complemento: string,
+    bairro: string,
+    localidade: string,
+    uf: string
+}
+
+const getInfoByCep = async (cep: string) => {
+    try {
+        const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const AddAddress = () => {
     const pageTitle = 'Adicione o endereço'
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<Form>()
+
+    const [cepInfo, setCepInfo] = useState<cepInfo>()
+
+    const makeReqCep = async (cep: any) => {
+        const value = cep.target.value
+        if(value.length === 8) {
+            const data: cepInfo = await getInfoByCep(value)
+            setValue('cep', data.cep)
+            setValue('road', data.logradouro)
+            setValue('complement', data.complemento)
+            setValue('neighborhood', data.bairro)
+            if(data.localidade && data.uf) {
+                setValue('city', `${data.localidade}, ${data.uf}`)
+            }
+        }
+    }
+
+    const formatInputCep = (e: any) => {
+        const value = e.target.value
+        if(value.includes('-')) {
+            setValue('cep', value.replace('-', ''))
+        }
+    }
 
     const onSubmit: SubmitHandler<Form> = (data) => { }
 
@@ -40,7 +81,9 @@ const AddAddress = () => {
                                     placeholder="Ex.: 40548848"
                                     maxLength={8}
                                     {...register('cep', {
-                                        required: 'Campo obrigatório'
+                                        required: 'Campo obrigatório',
+                                        onBlur: async (value) => await makeReqCep(value),
+                                        onChange: e => formatInputCep(e)
                                     })} />
                                 {errors.cep && <p className="text-[14px] text-red-500 pl-3">{errors.cep.message}</p>}
                             </label>
@@ -70,13 +113,11 @@ const AddAddress = () => {
                             </div>
 
                             <label className="input-group">
-                                <div className="title">Complemento</div>
+                                <div className="title">Complemento (opcional)</div>
                                 <input
                                     type="text"
                                     placeholder="Ex.: Próximo ao mercado"
-                                    {...register('complement', {
-                                        required: 'Campo obrigatório',
-                                    })} />
+                                    {...register('complement')} />
                                 {errors.complement && <p className="text-[14px] text-red-500 pl-3">{errors.complement.message}</p>}
                             </label>
 
@@ -91,29 +132,16 @@ const AddAddress = () => {
                                 {errors.neighborhood && <p className="text-[14px] text-red-500 pl-3">{errors.neighborhood.message}</p>}
                             </label>
 
-                            <div className="double-input">
-                                <label className="input-group">
-                                    <div className="title">Cidade</div>
-                                    <input
-                                        type="text"
-                                        {...register('city', {
-                                            value: `Insira o Cep para preencher a cidade`,
-                                            required: 'Campo obrigatório',
-                                        })} />
-                                    {errors.city && <p className="text-[14px] text-red-500 pl-3">{errors.city.message}</p>}
-                                </label>
-
-                                <label className="input-group">
-                                    <div className="title">Estado</div>
-                                    <input
-                                        type="text"
-                                        {...register('state', {
-                                            value: `Insira o Cep para preencher o estado`,
-                                            required: 'Campo obrigatório'
-                                        })} />
-                                    {errors.state && <p className="text-[14px] text-red-500 pl-3">{errors.state.message}</p>}
-                                </label>
-                            </div>
+                            <label className="input-group">
+                                <div className="title">Cidade</div>
+                                <input
+                                    type="text"
+                                    {...register('city', {
+                                        value: `Insira o Cep para preencher a cidade`,
+                                        required: 'Campo obrigatório',
+                                    })} />
+                                {errors.city && <p className="text-[14px] text-red-500 pl-3">{errors.city.message}</p>}
+                            </label>
                         </div>
 
                         <input type="submit" className='cursor-pointer w-full h-10 px-6 rounded-full bg-[#122E5F] text-white text-[18px]' value="Próximo" />
