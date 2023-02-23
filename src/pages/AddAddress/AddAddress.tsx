@@ -38,7 +38,7 @@ const getInfoByCep = async (cep: string) => {
 const AddAddress = () => {
     const pageTitle = 'Adicione o endereço'
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<Form>()
+    const { register, handleSubmit, setValue, setError, clearErrors, reset, formState: { errors } } = useForm<Form>()
 
     const [cepInfo, setCepInfo] = useState<cepInfo>()
 
@@ -46,7 +46,9 @@ const AddAddress = () => {
         const value = cep.target.value
         if(value.length === 8) {
             const data: cepInfo = await getInfoByCep(value)
-            setValue('cep', data.cep)
+
+            data.cep ? setValue('cep', data.cep) : setError('cep', {type: 'custom', message: 'Cep inexistente'})
+ 
             setValue('road', data.logradouro)
             setValue('complement', data.complemento)
             setValue('neighborhood', data.bairro)
@@ -57,10 +59,17 @@ const AddAddress = () => {
     }
 
     const formatInputCep = (e: any) => {
-        const value = e.target.value
+        clearErrors('cep')
+
+        let value = e.target.value
+
         if(value.includes('-')) {
-            setValue('cep', value.replace('-', ''))
+            value = value.replace('-', '')
+            reset() // limpa os outros campos ao manusear o cep após preenchido
         }
+
+        value = parseInt(value)
+        value ? setValue('cep', `${value}`) : setValue('cep', '')
     }
 
     const onSubmit: SubmitHandler<Form> = (data) => { }
