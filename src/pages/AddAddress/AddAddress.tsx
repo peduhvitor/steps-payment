@@ -53,6 +53,8 @@ const AddAddress = () => {
             if(data.localidade && data.uf) {
                 setValue('city', `${data.localidade}, ${data.uf}`)
             }
+        } else if(value.length > 0) {
+            setError('cep', { type: 'custom', message: 'Cep inválido' })
         }
     }
 
@@ -89,6 +91,7 @@ const AddAddress = () => {
                                     maxLength={8}
                                     {...register('cep', {
                                         required: 'Campo obrigatório',
+                                        minLength: { value: 8, message:'Cep inválido' },
                                         onBlur: async (value) => await makeReqCep(value),
                                         onChange: e => formatInputCep(e)
                                     })} />
