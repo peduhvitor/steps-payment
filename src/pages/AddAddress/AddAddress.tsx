@@ -40,8 +40,6 @@ const AddAddress = () => {
 
     const { register, handleSubmit, setValue, setError, clearErrors, reset, formState: { errors } } = useForm<Form>()
 
-    const [cepInfo, setCepInfo] = useState<cepInfo>()
-
     const makeReqCep = async (cep: any) => {
         const value = cep.target.value
         if(value.length === 8) {
