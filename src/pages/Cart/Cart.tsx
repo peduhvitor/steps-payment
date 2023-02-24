@@ -1,4 +1,5 @@
 import { useContext } from "react"
+import { useNavigate } from "react-router-dom"
 import BackButtonAndTitle from "../../components/global/BackButtonAndTitle/BackButtonAndTitle"
 import CartProduct from "../../components/pageCart/CartProduct/CartProduct"
 import RelatedProducts from "../../components/pageCart/RelatedProducts/RelatedProducts"
@@ -10,6 +11,7 @@ const Cart = () => {
 
     const { state, dispatch } = useContext(Context)
     const { productsInTheCart, suggestedProducts, amountItensInTheCart, subTotal } = cartFunctions(state.listCart)
+    const navigate = useNavigate()
 
 
     // Adiciona produtos do carrinho ao pedido
@@ -28,6 +30,17 @@ const Cart = () => {
                 list: productsToOrder
             }
         })
+
+        if(state.userInfo.basicsInfo.id) {
+            setTimeout(() => {
+                navigate('/step-buy/payment-form')
+            }, 200)
+            return
+        }
+
+        setTimeout(() => {
+            navigate('/step-buy/complete-register')
+        }, 200)
     }
 
     return (
