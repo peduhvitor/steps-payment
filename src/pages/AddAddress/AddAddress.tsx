@@ -86,6 +86,7 @@ const AddAddress = () => {
     const onSubmit: SubmitHandler<Form> = (data) => { 
         const { cep, road, number, complement, neighborhood, city } = data
 
+        // Adiciona endereço ao pedido
         dispatch({
             type: 'CREATE_ORDER',
             payload: {
