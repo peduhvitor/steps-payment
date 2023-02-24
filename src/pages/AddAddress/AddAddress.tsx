@@ -43,23 +43,21 @@ const AddAddress = () => {
     const makeReqCep = async (cep: any) => {
         let value = cep.target.value
 
-        if(value.includes('-')) {
-            value = value.replace('-', '')
-        }
+        if(!value.includes('-')) {
+            if(value.length === 8) {
+                const data: cepInfo = await getInfoByCep(value)
 
-        if(value.length === 8) {
-            const data: cepInfo = await getInfoByCep(value)
-
-            data.cep ? setValue('cep', data.cep) : setError('cep', {type: 'custom', message: 'Cep inexistente'})
- 
-            setValue('road', data.logradouro)
-            setValue('complement', data.complemento)
-            setValue('neighborhood', data.bairro)
-            if(data.localidade && data.uf) {
-                setValue('city', `${data.localidade}, ${data.uf}`)
+                data.cep ? setValue('cep', data.cep) : setError('cep', {type: 'custom', message: 'Cep inexistente'})
+    
+                setValue('road', data.logradouro)
+                setValue('complement', data.complemento)
+                setValue('neighborhood', data.bairro)
+                if(data.localidade && data.uf) {
+                    setValue('city', `${data.localidade}, ${data.uf}`)
+                }
+            } else if(value.length > 0) {
+                setError('cep', { type: 'custom', message: 'Cep inválido' })
             }
-        } else if(value.length > 0) {
-            setError('cep', { type: 'custom', message: 'Cep inválido' })
         }
     }
 
