@@ -41,7 +41,12 @@ const AddAddress = () => {
     const { register, handleSubmit, setValue, setError, clearErrors, reset, formState: { errors } } = useForm<Form>()
 
     const makeReqCep = async (cep: any) => {
-        const value = cep.target.value
+        let value = cep.target.value
+
+        if(value.includes('-')) {
+            value = value.replace('-', '')
+        }
+
         if(value.length === 8) {
             const data: cepInfo = await getInfoByCep(value)
 
@@ -62,6 +67,10 @@ const AddAddress = () => {
         clearErrors('cep')
 
         let value = e.target.value
+
+        if(value.length === 8) {
+            makeReqCep(e)
+        }
 
         if(value.includes('-')) {
             value = value.replace('-', '')
