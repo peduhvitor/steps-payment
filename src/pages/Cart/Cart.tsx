@@ -11,6 +11,25 @@ const Cart = () => {
     const { state, dispatch } = useContext(Context)
     const { productsInTheCart, suggestedProducts, amountItensInTheCart, subTotal } = cartFunctions(state.listCart)
 
+
+    // Adiciona produtos do carrinho ao pedido
+
+    let productsToOrder: any = []
+
+    productsInTheCart.map(item => {
+        const { img, price: currentPrice, ...products } = item
+        productsToOrder.push({...products, currentPrice})
+    })
+
+    const addProductsToOrder = () => {
+        dispatch({
+            type: 'CREATE_ORDER',
+            payload: {
+                list: productsToOrder
+            }
+        })
+    }
+
     return (
         <div>
             <div className='flex flex-col w-full items-center my-10'>
@@ -47,7 +66,9 @@ const Cart = () => {
                                     <div className='text-[32px] text-[#293652] font-medium'><span className='text-[24px]'>R$</span>{subTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</div>
                                 </div>
 
-                                <button className='h-10 px-6 rounded-full bg-[#122E5F] text-white text-[18px]'>
+                                <button 
+                                    onClick={addProductsToOrder}
+                                    className='h-10 px-6 rounded-full bg-[#122E5F] text-white text-[18px]'>
                                     Pronto para pagar 
                                 </button>
                             </div>

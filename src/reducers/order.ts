@@ -2,7 +2,14 @@ import { reducerAction } from "../types/reducerAction"
 import { listCartType } from "./listCart"
 
 export type InitialStateType = {
-    list: listCartType[],
+    list: [
+        {
+            id: string,
+            name: string,
+            amount: number,
+            currentPrice: number
+        }
+    ],
     user: {
         id: string,
         name: string,
