@@ -12,9 +12,9 @@ export type InitialStateType = {
         cep: string,
         road: string,
         number: string,
+        complement: string,
         neighborhood: string,
-        city: string,
-        state: string,
+        city: string
     },
     paymentForm: {
         method: string,
@@ -42,9 +42,9 @@ export const initialState: InitialStateType = {
         cep: '',
         road: '',
         number: '',
+        complement: '',
         neighborhood: '',
-        city: '',
-        state: ''
+        city: ''
     },
     paymentForm: {
         method: ''

@@ -38,6 +38,8 @@ const getInfoByCep = async (cep: string) => {
 const AddAddress = () => {
     const pageTitle = 'Adicione o endereço'
 
+    const { dispatch } = useContext(Context)
+
     const { register, handleSubmit, setValue, setError, clearErrors, reset, formState: { errors } } = useForm<Form>()
 
     const makeReqCep = async (cep: any) => {
@@ -79,7 +81,22 @@ const AddAddress = () => {
         value ? setValue('cep', `${value}`) : setValue('cep', '')
     }
 
-    const onSubmit: SubmitHandler<Form> = (data) => { }
+    const navigate = useNavigate()
+
+    const onSubmit: SubmitHandler<Form> = (data) => { 
+        const { cep, road, number, complement, neighborhood, city } = data
+
+        dispatch({
+            type: 'CREATE_ORDER',
+            payload: {
+                address: { cep, road, number, complement, neighborhood, city }
+            }
+        })
+
+        setTimeout(() => {
+            navigate('/step-buy/payment-form')
+        }, 200)
+    }
 
     return (
         <div className="flex flex-col w-full items-center my-10">
