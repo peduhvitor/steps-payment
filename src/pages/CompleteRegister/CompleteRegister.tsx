@@ -17,14 +17,20 @@ const CompleteRegister = () => {
     const pageTitle = 'Completar cadastro'
 
     const { dispatch } = useContext(Context)
+    const navigate = useNavigate()
+    const { fakeFullName, fakeEmail, fakePassword } = createFakeData()
 
+    
+    // Define em qual página estamos para o status step
+    
     useEffect(() => {
         dispatch({ type: 'CHANGE-STEP', payload: { page: 'completeRegister'} })
     }, [])
-    
-    const { register, handleSubmit, watch, formState: {errors} } = useForm<DataForm>()
 
-    const navigate = useNavigate();
+
+    // Configurações do formulário
+
+    const { register, handleSubmit, watch, formState: {errors} } = useForm<DataForm>()
 
     const onSubmit: SubmitHandler<DataForm> = (data) => {
         const { name, email, password } = data
@@ -48,8 +54,6 @@ const CompleteRegister = () => {
             navigate('/step-buy/payment-form')
         }, 200)
     }
-    
-    const { fakeFullName, fakeEmail, fakePassword } = createFakeData()
 
     return (
         <div className="flex flex-col w-full items-center my-10">
