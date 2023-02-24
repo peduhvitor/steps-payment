@@ -3,6 +3,7 @@ import { UserExistVerify} from "./middlewares/UserExistVerify"
 import AddAddress from "./pages/AddAddress/AddAddress"
 import Cart from "./pages/Cart/Cart"
 import CompleteRegister from "./pages/CompleteRegister/CompleteRegister"
+import DetailsOrder from "./pages/DetailsOrder/DetailsOrder"
 import PaymentForm from "./pages/PaymentForm/PaymentForm"
 
 const MainRoutes = () => {
@@ -18,6 +19,9 @@ const MainRoutes = () => {
         { path: '/step-buy/payment-form', 
             element: <UserExistVerify route='/step-buy/complete-register' required><PaymentForm/></UserExistVerify> 
         },
+        { path: '/step-buy/details-order',
+            element: <UserExistVerify route='/step-buy/complete-register' required><DetailsOrder/></UserExistVerify>
+        }
     ])
 }
 
