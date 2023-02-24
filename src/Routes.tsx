@@ -12,11 +12,12 @@ const MainRoutes = () => {
         { path: '/step-buy/complete-register', 
             element: <UserExistVerify route='/cart'><CompleteRegister/></UserExistVerify> 
         },
+        {path: '/step-buy/add-address',
+            element: <UserExistVerify route='/step-buy/complete-register' required><AddAddress/></UserExistVerify>
+        },
         { path: '/step-buy/payment-form', 
             element: <UserExistVerify route='/step-buy/complete-register' required><PaymentForm/></UserExistVerify> 
         },
-        {path: '/step-buy/add-address',
-            element: <UserExistVerify route='/step-buy/complete-register'><AddAddress/></UserExistVerify>}
     ])
 }
 

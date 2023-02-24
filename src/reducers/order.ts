@@ -68,12 +68,25 @@ export const initialState: InitialStateType = {
 
 export const reducer = (state: InitialStateType, action: reducerAction) => {
     if(action.type === 'CREATE_ORDER') {
-        return {
-            list: action.payload.list,
-            user: action.payload.user,
-            address: action.payload.address,
-            paymentForm: action.payload.paymentForm,
-            orderDetails: action.payload.orderDetails
+
+        if (action.payload.list) {
+            return { ...state, list: action.payload.list } 
+        }
+
+        if (action.payload.user) {
+            return { ...state, user: action.payload.user } 
+        }
+
+        if (action.payload.address) {
+            return { ...state, address: action.payload.address } 
+        }
+
+        if (action.payload.paymentForm) {
+            return { ...state, paymentForm: action.payload.paymentForm } 
+        }
+
+        if (action.payload.orderDetails) {
+            return { ...state, orderDetails: action.payload.orderDetails } 
         }
     }
 

@@ -22,7 +22,7 @@ const CompleteRegister = () => {
 
     
     // Define em qual página estamos para o status step
-    
+
     useEffect(() => {
         dispatch({ type: 'CHANGE-STEP', payload: { page: 'completeRegister'} })
     }, [])
@@ -51,7 +51,7 @@ const CompleteRegister = () => {
         })
 
         setTimeout(() => {
-            navigate('/step-buy/payment-form')
+            navigate('/step-buy/add-address')
         }, 200)
     }
 

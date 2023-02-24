@@ -1,17 +1,27 @@
 import { useContext, useEffect } from "react"
 import { Context } from "../../contexts/Context"
 import { useForm, SubmitHandler } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 
 import BackButtonAndTitle from "../../components/global/BackButtonAndTitle/BackButtonAndTitle"
 import StatusStep from "../../components/stepsBuy/StatusStep"
 import './paymentForm.css'
 
+type Form = {
+    paymentForm: string,
+    nameCard?: string,
+    numberCard?: string,
+    validity?: string,
+    cvc?: string
+}
 
 const PaymentForm = () => {
 
     const pageTitle = 'Forma de pagamento'
 
-    const { dispatch } = useContext(Context)
+    const { state, dispatch } = useContext(Context)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         dispatch({
@@ -21,13 +31,33 @@ const PaymentForm = () => {
     }, [])
 
 
-    const { register, handleSubmit, watch, setValue } = useForm();
+    const { register, handleSubmit, watch, setValue, formState: {errors} } = useForm<Form>();
 
     useEffect(() => {
-        setValue('payment-form', 'pix')
+        setValue('paymentForm', 'pix')
     }, [])
 
-    const onSubmit = (data: any) => console.log(data);
+    const onSubmit: SubmitHandler<Form> = data => {
+        const { paymentForm: method, nameCard: name, numberCard: number, validity, cvc } = data
+
+        console.log(data);
+        
+
+        // Adiciona a forma de pagamento
+        dispatch({
+            type: 'CREATE_ORDER',
+            payload: {
+                paymentForm: {
+                    method,
+                    infoCard: { name, number, validity, cvc }
+                }
+            }
+        })
+
+        setTimeout(() => {
+            navigate('/step-buy/details-order')
+        }, 1000)
+    }
     
 
     return (
@@ -45,69 +75,97 @@ const PaymentForm = () => {
 
                                 <div className="flex gap-5">
                                     <input 
-                                        {...register('payment-form')} 
+                                        {...register('paymentForm')} 
                                         type="radio" 
                                         id="pix" 
                                         value='pix' 
-                                        checked={watch('payment-form') === 'pix'}/>
+                                        checked={watch('paymentForm') === 'pix'}/>
 
                                     <label htmlFor="pix" className="select-payment-form">Pix</label>
 
                                     <input 
-                                        {...register('payment-form')} 
+                                        {...register('paymentForm')} 
                                         type="radio" 
                                         id="ticket" 
                                         value='ticket' 
-                                        checked={watch('payment-form') === 'ticket'}/>
+                                        checked={watch('paymentForm') === 'ticket'}/>
 
                                     <label htmlFor="ticket" className="select-payment-form">Boleto</label>
 
                                     <input 
-                                        {...register('payment-form')} 
+                                        {...register('paymentForm')} 
                                         type="radio" 
                                         id="credit-card" 
                                         value='credit-card' 
-                                        checked={watch('payment-form') === 'credit-card'}/>
+                                        checked={watch('paymentForm') === 'credit-card'}/>
 
                                     <label htmlFor="credit-card" className="select-payment-form">Cartão de crédito</label>
                                 </div>
                             </div>
 
-                            { watch('payment-form') === 'pix' && 
+                            { watch('paymentForm') === 'pix' && 
                                 <div className="text-center">
                                     Na próxima tela efetue o pagamento via pix
                                 </div>
                             }
 
-                            { watch('payment-form') === 'ticket' && 
+                            { watch('paymentForm') === 'ticket' && 
                                 <div className="text-center">
                                     Na próxima tela efetue o pagamento via boleto
                                 </div>
                             }
 
-                            { watch('payment-form') === 'credit-card' && 
+                            { watch('paymentForm') === 'credit-card' && 
                                 <>
                                 <div className="line bg-[#DADFE8]"></div>
 
                                 <label className="input-group">
                                     <div className="title">Nome do titular</div>
-                                    <input type="text" placeholder="Digite o nome que consta no cartão" />
+                                    <input 
+                                        type="text" 
+                                        placeholder="Digite o nome que consta no cartão" 
+                                        {...register('nameCard', {
+                                            required: 'Campo obrigatório'
+                                        })}
+                                        />
+                                        {errors.nameCard && <p className="text-[14px] text-red-500 pl-3">{errors.nameCard.message}</p>}
                                 </label>
 
                                 <label className="input-group">
                                     <div className="title">Número do cartão</div>
-                                    <input type="text" placeholder="Digite o número que consta no cartão" />
+                                    <input 
+                                        type="text" 
+                                        placeholder="Digite o número que consta no cartão" 
+                                        {...register('numberCard', {
+                                            required: 'Campo obrigatório'
+                                        })}
+                                        />
+                                        {errors.numberCard && <p className="text-[14px] text-red-500 pl-3">{errors.numberCard.message}</p>}
                                 </label>
 
                                 <div className="double-input">
                                     <label className="input-group">
                                         <div className="title">Expiração</div>
-                                        <input type="text" placeholder="MM/AAAA" />
+                                        <input 
+                                            type="text" 
+                                            placeholder="MM/AAAA" 
+                                            {...register('validity', {
+                                                required: 'Campo obrigatório'
+                                            })}
+                                            />
+                                            {errors.validity && <p className="text-[14px] text-red-500 pl-3">{errors.validity.message}</p>}
                                     </label>
 
                                     <label className="input-group">
                                         <div className="title">CVC</div>
-                                        <input type="text" placeholder="000" />
+                                        <input 
+                                            type="text" 
+                                            placeholder="000" 
+                                            {...register('cvc', {
+                                                required: 'Campo obrigatório'
+                                            })}
+                                            />
+                                            {errors.cvc && <p className="text-[14px] text-red-500 pl-3">{errors.cvc.message}</p>}
                                     </label>
                                 </div>
                                 </>
