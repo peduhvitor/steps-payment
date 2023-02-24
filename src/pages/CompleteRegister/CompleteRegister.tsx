@@ -22,17 +22,26 @@ const CompleteRegister = () => {
         dispatch({ type: 'CHANGE-STEP', payload: { page: 'completeRegister'} })
     }, [])
     
-
     const { register, handleSubmit, watch, formState: {errors} } = useForm<DataForm>()
+
     const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<DataForm> = (data) => {
         const { name, email, password } = data
         const id = uuidv4()
 
+        // Cadastro do usuário
         dispatch({
             type: 'CHANGE_DATA_USER',
             payload: { data: { id, name, email, password } }
+        })
+
+        // Adiciona o usuário ao pedido
+        dispatch({
+            type: 'CREATE_ORDER',
+            payload: {
+                user: { id, name, email }
+            }
         })
 
         setTimeout(() => {
