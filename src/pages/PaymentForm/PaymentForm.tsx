@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react"
 import { Context } from "../../contexts/Context"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
+import { v4 as uuidv4 } from 'uuid'
 
 import BackButtonAndTitle from "../../components/global/BackButtonAndTitle/BackButtonAndTitle"
 import StatusStep from "../../components/stepsBuy/StatusStep"
@@ -40,9 +41,6 @@ const PaymentForm = () => {
     const onSubmit: SubmitHandler<Form> = data => {
         const { paymentForm: method, nameCard: name, numberCard: number, validity, cvc } = data
 
-        console.log(data);
-        
-
         // Adiciona a forma de pagamento
         dispatch({
             type: 'CREATE_ORDER',
@@ -50,6 +48,19 @@ const PaymentForm = () => {
                 paymentForm: {
                     method,
                     infoCard: { name, number, validity, cvc }
+                }
+            }
+        })
+
+        const idOrder = uuidv4()
+
+        // Adiciona os detalhes do pedido
+        dispatch({
+            type: 'CREATE_ORDER',
+            payload: {
+                orderDetails: {
+                    code: idOrder,
+                    status: 'pending'
                 }
             }
         })

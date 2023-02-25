@@ -2,6 +2,7 @@ import { useEffect, useContext } from "react"
 import BackButtonAndTitle from "../../components/global/BackButtonAndTitle/BackButtonAndTitle"
 import StatusStep from "../../components/stepsBuy/StatusStep"
 import { Context } from "../../contexts/Context"
+import { faker } from '@faker-js/faker/locale/pt_BR'
 
 
 const DetailsOrder = () => {
@@ -18,6 +19,10 @@ const DetailsOrder = () => {
     const defineOrderStatus = () => {
         if(state.order.orderDetails.status === 'preparingForDelivery') {
             return 'Preparando para entrega'
+        }
+
+        if(state.order.orderDetails.status === 'pending') {
+            return 'Pendente'
         }
     }
 
@@ -82,11 +87,32 @@ const DetailsOrder = () => {
                             </div>
 
                             <div className="flex flex-col items-center gap-7 border-2 p-7 flex-1 rounded-2xl">
-                                <div className="text-[18px] font-medium">Efetue o pagamento via</div>
 
-                                <div className="bg-white w-52 h-52 rounded-3xl p-3">
-                                    <img src="" alt="" />
-                                </div>
+                                {state.order.paymentForm.method !== 'credit-card' &&
+                                    <div className="text-[18px] font-medium">Efetue o pagamento via {defineDataByPaymentForm()?.method.toLowerCase()}</div>
+                                }
+
+                                {state.order.paymentForm.method === 'credit-card' &&
+                                    <img className="m-auto" src="/success.svg" alt="" />
+                                }
+
+                                {state.order.paymentForm.method === 'pix' &&
+                                    <div className="bg-white w-52 h-52 rounded-3xl p-3">
+                                        <img src="/qrcode.png" alt="" />
+                                    </div>
+                                }
+
+                                {state.order.paymentForm.method === 'ticket' &&
+                                    <>
+                                    <div className="bg-white w-full overflow-hidden h-52 rounded-3xl p-1">
+                                        <img src="/ticket.png" alt="" />
+                                    </div>
+
+                                    <button className='w-full h-10 px-6 rounded-full bg-[#122E5F] text-white text-[18px]'>
+                                        Visualizar boleto
+                                    </button>
+                                    </>
+                                }
                             </div>
                         </div>
                     </div>
