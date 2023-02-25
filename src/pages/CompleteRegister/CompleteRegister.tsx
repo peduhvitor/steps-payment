@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from 'uuid'
 const CompleteRegister = () => {
     const pageTitle = 'Completar cadastro'
 
-    const { dispatch } = useContext(Context)
+    const { state, dispatch } = useContext(Context)
     const navigate = useNavigate()
     const { fakeFullName, fakeEmail, fakePassword } = createFakeData()
 
@@ -25,6 +25,15 @@ const CompleteRegister = () => {
 
     useEffect(() => {
         dispatch({ type: 'CHANGE-STEP', payload: { page: 'completeRegister'} })
+    }, [])
+
+
+    // Caso os produtos não foram adicionados ainda, voltar para a página de carrinho
+
+    useEffect(() => {
+        if(!state.order.list[0].id) {
+            navigate('/cart')
+        }
     }, [])
 
 

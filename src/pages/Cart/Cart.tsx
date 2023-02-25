@@ -10,18 +10,8 @@ const Cart = () => {
     const pageTitle = 'Carrinho'
 
     const { state, dispatch } = useContext(Context)
-    const { productsInTheCart, suggestedProducts, amountItensInTheCart, subTotal } = cartFunctions(state.listCart)
+    const { productsInTheCart, productsToOrder, suggestedProducts, amountItensInTheCart, subTotal } = cartFunctions(state.listCart)
     const navigate = useNavigate()
-
-
-    // Adiciona produtos do carrinho ao pedido
-
-    let productsToOrder: any = []
-
-    productsInTheCart.map(item => {
-        const { img, price: currentPrice, ...products } = item
-        productsToOrder.push({...products, currentPrice})
-    })
 
     const addProductsToOrder = () => {
         dispatch({

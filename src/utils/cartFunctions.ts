@@ -4,6 +4,7 @@ import { listCartType } from "../reducers/listCart";
 const cartFunctions = (listCart: listCartType[]) => {
     return {
         productsInTheCart: productList(listCart),
+        productsToOrder: productsToOrder(productList(listCart)),
         suggestedProducts: suggestedProducts(listCart),
         amountItensInTheCart: amount(productList(listCart)),
         subTotal: subtotal(productList(listCart))
@@ -25,6 +26,17 @@ const productList = (listCart: listCartType[]) => {
     })
 
     return dataProducts
+}
+
+const productsToOrder = (productsInTheCart: any) => {
+    let productsToOrder: any = []
+
+    productsInTheCart.map((item: any) => {
+        const { img, price: currentPrice, ...products } = item
+        productsToOrder.push({...products, currentPrice})
+    })
+
+    return productsToOrder
 }
 
 const suggestedProducts = (listCart: listCartType[]) => {
