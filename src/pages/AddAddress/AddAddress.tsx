@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState } from "react"
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler, Path } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import axios from 'axios';
 
@@ -81,8 +81,12 @@ const AddAddress = () => {
             reset() // limpa os outros campos ao manusear o cep após preenchido
         }
 
-        value = parseInt(value)
-        value ? setValue('cep', `${value}`) : setValue('cep', '')
+        formatInputToNumber(value, 'cep')
+    }
+
+    const formatInputToNumber = (value: string, input: Path<Form>) => {
+        const valueToNumber = parseInt(value)
+        valueToNumber ? setValue(input, `${valueToNumber}`) : setValue(input, '')
     }
 
     const navigate = useNavigate()
@@ -94,7 +98,9 @@ const AddAddress = () => {
         dispatch({
             type: 'CREATE_ORDER',
             payload: {
-                address: { cep, road, number, complement, neighborhood, city }
+                address: { cep, road, 
+                    number: number ? number : 'S/N', 
+                    complement, neighborhood, city }
             }
         })
 
@@ -145,7 +151,7 @@ const AddAddress = () => {
                                         type="text"
                                         placeholder="Ex.: 541"
                                         {...register('number', {
-                                            required: 'Campo obrigatório'
+                                            onChange: e => formatInputToNumber(e.target.value, 'number')
                                         })} />
                                     {errors.number && <p className="text-[14px] text-red-500 pl-3">{errors.number.message}</p>}
                                 </label>
