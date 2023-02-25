@@ -24,7 +24,7 @@ const CompleteRegister = () => {
     // Define em qual página estamos para o status step
 
     useEffect(() => {
-        dispatch({ type: 'CHANGE-STEP', payload: { page: 'completeRegister'} })
+        dispatch({ type: 'CHANGE-STEP', payload: { step: 1 } })
     }, [])
 
 

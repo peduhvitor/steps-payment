@@ -25,10 +25,7 @@ const PaymentForm = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        dispatch({
-            type: 'CHANGE-STEP',
-            payload: { page: 'paymentForm' }
-        })
+        dispatch({ type: 'CHANGE-STEP', payload: { step: 3 } })
     }, [])
 
 

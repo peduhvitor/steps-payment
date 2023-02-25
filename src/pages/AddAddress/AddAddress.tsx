@@ -42,6 +42,10 @@ const AddAddress = () => {
 
     const { register, handleSubmit, setValue, setError, clearErrors, reset, formState: { errors } } = useForm<Form>()
 
+    useEffect(() => {
+        dispatch({ type: 'CHANGE-STEP', payload: { step: 2 } })
+    }, [])
+
     const makeReqCep = async (cep: any) => {
         let value = cep.target.value
 

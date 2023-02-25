@@ -1,40 +1,53 @@
 import { reducerAction } from "../types/reducerAction"
 
 export type InitialStateType = {
-    completeRegister: string,
-    paymentForm: string,
-    details: string
+    step1: string,
+    step2: string,
+    step3: string,
+    step4: string
 }
 
 export const initialState: InitialStateType = {
-    completeRegister: "notAccessed",
-    paymentForm: "notAccessed",
-    details: "notAccessed",
+    step1: "notAccessed",
+    step2: "notAccessed",
+    step3: "notAccessed",
+    step4: "notAccessed"
 }
 
 export const reducer = (state: InitialStateType, action: reducerAction) => {
     if (action.type === 'CHANGE-STEP') {
-        switch (action.payload.page) {
-            case 'completeRegister':
-                return {
-                    completeRegister: 'accessing',
-                    paymentForm: 'notAccessed',
-                    details: 'notAccessed'
+        if(action.payload.step) {
+            let steps = [
+                {step: 'notAccessed'},
+                {step: 'notAccessed'},
+                {step: 'notAccessed'},
+                {step: 'notAccessed'}
+            ]
+
+            steps.forEach((item, index) => {
+                if(action.payload.step - 1 === index) {
+                    item.step = 'accessing'
+        
+                    steps.forEach((i, idx) => {
+                        if(idx < index) {
+                            i.step = 'accessed'
+                        } else if (idx > index) {
+                            i.step = 'notAccessed'
+                        }
+                    })
                 }
-            case 'paymentForm':
-                return {
-                    completeRegister: 'accessed',
-                    paymentForm: 'accessing',
-                    details: 'notAccessed'
-                }
-            case 'details':
-                return {
-                    completeRegister: 'accessed',
-                    paymentForm: 'accessed',
-                    details: 'accessing'
-                }
+            })
+
+            return {
+                step1: steps[0].step,
+                step2: steps[1].step,
+                step3: steps[2].step,
+                step4: steps[3].step
+            }
         }
     }
+
+    
 
     return state
 }

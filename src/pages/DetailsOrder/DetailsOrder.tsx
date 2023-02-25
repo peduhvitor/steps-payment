@@ -8,10 +8,10 @@ import { faker } from '@faker-js/faker/locale/pt_BR'
 const DetailsOrder = () => {
     const pageTitle = 'Detalhes do pedido'
 
-    const { state } = useContext(Context)
+    const { state, dispatch } = useContext(Context)
 
     useEffect(() => {
-        console.log(state.order);
+        dispatch({ type: 'CHANGE-STEP', payload: { step: 4 } })
     }, [])
 
     const addressFormat = `${state.order.address.road} ${state.order.address.number}, ${state.order.address.neighborhood}, ${state.order.address.city} ${state.order.address.cep}`
