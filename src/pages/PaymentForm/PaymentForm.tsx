@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react"
 import { Context } from "../../contexts/Context"
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler, Path } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { v4 as uuidv4 } from 'uuid'
 
@@ -81,6 +81,11 @@ const PaymentForm = () => {
 
         // Função nativa que evita que a tecla pressionada seja exibida no input
         e.preventDefault()
+    }
+
+    const formatInputToNumber = (value: string, input: Path<Form>) => {
+        const valueToNumber = parseInt(value)
+        valueToNumber ? setValue(input, `${valueToNumber}`) : setValue(input, '')
     }
     
 
@@ -187,8 +192,10 @@ const PaymentForm = () => {
                                         <input 
                                             type="text" 
                                             placeholder="000" 
+                                            maxLength={3}
                                             {...register('cvc', {
-                                                required: 'Campo obrigatório'
+                                                required: 'Campo obrigatório',
+                                                onChange: e => formatInputToNumber(e.target.value, 'cvc')
                                             })}
                                             />
                                             {errors.cvc && <p className="text-[14px] text-red-500 pl-3">{errors.cvc.message}</p>}
