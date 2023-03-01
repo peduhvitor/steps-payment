@@ -67,13 +67,20 @@ const PaymentForm = () => {
         }, 1000)
     }
 
-    const formatNumberCardInput = (e: any) => {
-        const value = e.target.value
+    const formatNumberCardInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const input = e.target as HTMLInputElement
+        const value = input.value
         const key = e.key
 
-        if((value.length === 4 && key !== 'Backspace') || (value.length === 9 && key !== 'Backspace') || (value.length === 14 && key !== 'Backspace')) {
-            setValue('numberCard', `${value} `)
+        if(/\d/.test(key) || key === 'Backspace') {
+            if((value.length === 4 || value.length === 9 || value.length === 14) && key !== 'Backspace') {
+                setValue('numberCard', `${value} `)
+            }
+            return
         }
+
+        // Função nativa que evita que a tecla pressionada seja exibida no input
+        e.preventDefault()
     }
     
 
