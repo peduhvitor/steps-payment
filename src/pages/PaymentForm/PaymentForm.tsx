@@ -66,6 +66,15 @@ const PaymentForm = () => {
             navigate('/step-buy/details-order')
         }, 1000)
     }
+
+    const formatNumberCardInput = (e: any) => {
+        const value = e.target.value
+        const key = e.key
+
+        if((value.length === 4 && key !== 'Backspace') || (value.length === 9 && key !== 'Backspace') || (value.length === 14 && key !== 'Backspace')) {
+            setValue('numberCard', `${value} `)
+        }
+    }
     
 
     return (
@@ -144,6 +153,8 @@ const PaymentForm = () => {
                                     <input 
                                         type="text" 
                                         placeholder="Digite o número que consta no cartão" 
+                                        maxLength={19}
+                                        onKeyDown={formatNumberCardInput}
                                         {...register('numberCard', {
                                             required: 'Campo obrigatório'
                                         })}

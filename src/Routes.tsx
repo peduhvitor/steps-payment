@@ -17,7 +17,7 @@ const MainRoutes = () => {
             element: <UserExistVerify route='/step-buy/complete-register' required><AddAddress/></UserExistVerify>
         },
         { path: '/step-buy/payment-form', 
-            element: <UserExistVerify route='/step-buy/complete-register' required><PaymentForm/></UserExistVerify> 
+            element: <UserExistVerify route='/step-buy/complete-register' ><PaymentForm/></UserExistVerify> 
         },
         { path: '/step-buy/details-order',
             element: <UserExistVerify route='/step-buy/complete-register' required><DetailsOrder/></UserExistVerify>
