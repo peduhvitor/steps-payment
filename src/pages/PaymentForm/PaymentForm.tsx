@@ -67,20 +67,13 @@ const PaymentForm = () => {
         }, 1000)
     }
 
-    const formatNumberCardInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const input = e.target as HTMLInputElement
-        const value = input.value
-        const key = e.key
+    const formatNumberCardInput = (e: any) => {
+        let value = e.target.value
 
-        if(/\d/.test(key) || key === 'Backspace') {
-            if((value.length === 4 || value.length === 9 || value.length === 14) && key !== 'Backspace') {
-                setValue('numberCard', `${value} `)
-            }
-            return
+        if(value[4] !== ' ' || value[9] !== ' ' || value[14] !== ' ') {
+            const formatValue = value.replace(' ', '').replace(' ', '').replace(' ', '').replace(/(\d{1,4})/g, '$1 ').trim()
+            setValue('numberCard', formatValue)
         }
-
-        // Função nativa que evita que a tecla pressionada seja exibida no input
-        e.preventDefault()
     }
 
     const isMonthValid = (value: any) => {
@@ -90,6 +83,7 @@ const PaymentForm = () => {
 
     const isYearValid = (value: any) => {
         let currentYear = new Date().getFullYear()
+
         const year = value.split('/')[1].replace(' ', '')
 
         if(year.length === 4) {
@@ -113,31 +107,11 @@ const PaymentForm = () => {
         if(!isYearValid(value)) {
             setError('validity', {type: 'custom', message: 'Ano inválido'})
         }
-    } 
-
-    const formatValidityCardInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const input = e.target as HTMLInputElement
-        const value = input.value
-        const key = e.key
-
-        clearErrors('validity')
-
-        if(/\d/.test(key) || key === 'Backspace' || key === 'ArrowRight' || key === 'ArrowLeft') {
-            if(value.length === 2 && key !== 'Backspace') {
-                setValue('validity', `${value} / `)
-            }
-     
-            if(value.length === 5 && key === 'Backspace') {
-                setValue('validity', `${value[0]}${value[1]}${value[2]}`)
-            }
-            return
-        }
-
-        // Função nativa que evita que a tecla pressionada seja exibida no input
-        e.preventDefault()
     }
 
-    const formatRealTimeValidity = (e: any) => {
+    const formatValidityCardInput = (e: any) => {
+        clearErrors('validity')
+
         const value = e.target.value
 
         if(value[2] !== ' ' || value[3] !== '/' || value[4] !== ' ') {
@@ -229,9 +203,9 @@ const PaymentForm = () => {
                                         type="text" 
                                         placeholder="Digite o número que consta no cartão" 
                                         maxLength={19}
-                                        onKeyDown={formatNumberCardInput}
                                         {...register('numberCard', {
-                                            required: 'Campo obrigatório'
+                                            required: 'Campo obrigatório',
+                                            onChange: e => formatNumberCardInput(e)
                                         })}
                                         />
                                         {errors.numberCard && <p className="text-[14px] text-red-500 pl-3">{errors.numberCard.message}</p>}
@@ -242,13 +216,12 @@ const PaymentForm = () => {
                                         <div className="title">Expiração</div>
                                         <input 
                                             type="text" 
-                                            placeholder="MM/AAAA" 
-                                            onKeyDown={formatValidityCardInput}
+                                            placeholder="MM/AAAA"
                                             maxLength={9}
                                             {...register('validity', {
                                                 required: 'Campo obrigatório',
                                                 onBlur: v => validateValidityInput(v),
-                                                onChange: e => formatRealTimeValidity(e)
+                                                onChange: e => formatValidityCardInput(e)
                                             })}
                                             />
                                             {errors.validity && <p className="text-[14px] text-red-500 pl-3">{errors.validity.message}</p>}
