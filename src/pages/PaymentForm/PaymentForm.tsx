@@ -20,7 +20,7 @@ const PaymentForm = () => {
 
     const pageTitle = 'Forma de pagamento'
 
-    const { state, dispatch } = useContext(Context)
+    const { dispatch } = useContext(Context)
 
     const navigate = useNavigate()
 
@@ -29,7 +29,7 @@ const PaymentForm = () => {
     }, [])
 
 
-    const { register, handleSubmit, watch, setValue, formState: {errors} } = useForm<Form>();
+    const { register, handleSubmit, watch, setValue, setError, clearErrors, formState: {errors} } = useForm<Form>();
 
     useEffect(() => {
         setValue('paymentForm', 'pix')
@@ -81,6 +81,69 @@ const PaymentForm = () => {
 
         // Função nativa que evita que a tecla pressionada seja exibida no input
         e.preventDefault()
+    }
+
+    const isMonthValid = (value: any) => {
+        const month = Number(value.split('/')[0])
+        return month >=1 && month <= 12
+    }
+
+    const isYearValid = (value: any) => {
+        let currentYear = new Date().getFullYear()
+        const year = value.split('/')[1].replace(' ', '')
+
+        if(year.length === 4) {
+            return Number(year) >= currentYear
+        }
+
+        if(year.length === 2) {
+            currentYear = Number(currentYear.toString().slice(-2))
+            return Number(year) >= currentYear
+        }
+    }
+
+    const validateValidityInput = (e: any) => {
+        let value = e.target.value
+
+        if(!isMonthValid(value)) {
+            setError('validity', {type: 'custom', message: 'Mês inválido'})
+            return
+        }
+
+        if(!isYearValid(value)) {
+            setError('validity', {type: 'custom', message: 'Ano inválido'})
+        }
+    } 
+
+    const formatValidityCardInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const input = e.target as HTMLInputElement
+        const value = input.value
+        const key = e.key
+
+        clearErrors('validity')
+
+        if(/\d/.test(key) || key === 'Backspace' || key === 'ArrowRight' || key === 'ArrowLeft') {
+            if(value.length === 2 && key !== 'Backspace') {
+                setValue('validity', `${value} / `)
+            }
+     
+            if(value.length === 5 && key === 'Backspace') {
+                setValue('validity', `${value[0]}${value[1]}${value[2]}`)
+            }
+            return
+        }
+
+        // Função nativa que evita que a tecla pressionada seja exibida no input
+        e.preventDefault()
+    }
+
+    const formatRealTimeValidity = (e: any) => {
+        const value = e.target.value
+
+        if(value[2] !== ' ' || value[3] !== '/' || value[4] !== ' ') {
+            const formatValue = value.replace(' ', '').replace(' ', '').replace('/', '').replace(/^(\d{2})(\d)/, '$1 / $2')
+            setValue('validity', formatValue)
+        }
     }
 
     const formatInputToNumber = (value: string, input: Path<Form>) => {
@@ -180,8 +243,12 @@ const PaymentForm = () => {
                                         <input 
                                             type="text" 
                                             placeholder="MM/AAAA" 
+                                            onKeyDown={formatValidityCardInput}
+                                            maxLength={9}
                                             {...register('validity', {
-                                                required: 'Campo obrigatório'
+                                                required: 'Campo obrigatório',
+                                                onBlur: v => validateValidityInput(v),
+                                                onChange: e => formatRealTimeValidity(e)
                                             })}
                                             />
                                             {errors.validity && <p className="text-[14px] text-red-500 pl-3">{errors.validity.message}</p>}
